@@ -5,7 +5,7 @@ pipeline {
         CONTAINER_NAME = "core-service"
         PROJECT_NAME = "${JOB_NAME.tokenize('/')[0]}"
         PROJECT_VERSION = "${BRANCH_NAME}+${BUILD_NUMBER}"
-        USERNAME = 'microseversk'
+        USERNAME = "microseversk"
     }
     
     stages {
