@@ -15,13 +15,6 @@ pipeline {
             }
         }
 
-        stage("Tests"){
-            steps{
-                sh ''
-            }
-            
-        }
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $PROJECT_NAME .'
