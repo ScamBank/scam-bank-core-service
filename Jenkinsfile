@@ -31,10 +31,10 @@ pipeline {
         }
     }
     post {
-        success: {
+        success {
             echo 'Pipeline completed successfully!'
         }
-        failure: {
+        failure {
             echo 'Pipeline failed!'
         }
     }
