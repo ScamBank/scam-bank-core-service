@@ -1,6 +1,6 @@
 pipeline{
     agent{
-        label "node"
+        label any
     }
     environment{
         DOCKER_IMAGE = "scam-bank-core-service"
