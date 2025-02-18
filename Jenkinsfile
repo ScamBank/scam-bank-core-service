@@ -1,17 +1,13 @@
-pipeline{
-    agent{
-        label any
-    }
-    environment{
+pipeline {
+    agent any
+    environment {
         DOCKER_IMAGE = "scam-bank-core-service"
         CONTAINER_NAME = "core-service"
-        SERVER_IP = "45.130.146.135"
-        DEPLOY_PATH = "/opt/scam-bank-core-service"
     }
     
     stages {
         stage('Checkout') {
-            steps{
+            steps {
                 git branch: 'main', url: 'https://github.com/ScamBank/scam-bank-core-service.git'
             }
         }
