@@ -24,8 +24,8 @@ pipeline {
         stage('Push to Registry') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker tag $DOCKER_IMAGE $DOCKER_IMAGE:latest'
-                    sh 'docker push $DOCKER_IMAGE:latest'
+                    sh 'docker tag $DOCKER_IMAGE $USERNAME/$DOCKER_IMAGE:latest'
+                    sh 'docker push $USERNAME/$DOCKER_IMAGE:latest'
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
                 docker image prune -f
 
                 echo "Starting new container..."
-                    docker run -d --name $CONTAINER_NAME -p $PORT:3000 $DOCKER_IMAGE:latest
+                    docker run -d --name $CONTAINER_NAME -p $PORT:3000 $USERNAME/$DOCKER_IMAGE:latest
                 '''
             }
             echo 'Pipeline completed successfully!'
