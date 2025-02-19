@@ -33,6 +33,7 @@ pipeline {
     post {
         success {
             script {
+                sh '''
                 echo "Cleaning up old images and containers..."
                 docker stop $CONTAINER_NAME || true
                 docker rm $CONTAINER_NAME || true
@@ -41,6 +42,7 @@ pipeline {
 
                 echo "Starting new container..."
                     docker run -d --name $CONTAINER_NAME -p $PORT:3000 $DOCKER_IMAGE:latest
+                '''
             }
             echo 'Pipeline completed successfully!'
         }
