@@ -1,0 +1,9 @@
+services:
+  scam-bank-core-service:
+    image: microseversk/scam-bank-core-service:latest
+    build: .
+    container_name: scam-bank-core-service
+    ports:
+      - '3000:3000'
+    environment:
+      PORT: 3000

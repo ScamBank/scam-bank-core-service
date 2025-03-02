@@ -2,10 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE = "scam-bank-core-service"
-        CONTAINER_NAME = "core-service"
         PROJECT_VERSION = "${BUILD_NUMBER}"
         USERNAME = "microseversk"
-        PORT = 3000
     }
     
     stages {
@@ -15,17 +13,16 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                sh 'docker build -t $DOCKER_IMAGE .'
+                sh 'docker-compose build'
             }
         }
 
         stage('Push to Registry') {
             steps {
                 withDockerRegistry([credentialsId: 'docker-hub-credentials', url: '']) {
-                    sh 'docker tag $DOCKER_IMAGE $USERNAME/$DOCKER_IMAGE:latest'
-                    sh 'docker push $USERNAME/$DOCKER_IMAGE:latest'
+                    sh 'docker-compose push'
                 }
             }
         }
@@ -34,14 +31,14 @@ pipeline {
         success {
             script {
                 sh '''
-                echo "Cleaning up old images and containers..."
-                docker stop $CONTAINER_NAME || true
-                docker rm $CONTAINER_NAME || true
-                docker images | grep "$DOCKER_IMAGE" | awk '{print $3}' | xargs docker rmi -f || true
+                echo "Stopping and removing old containers..."
+                docker-compose down
+
+                echo "Cleaning up old images..."
                 docker image prune -f
 
-                echo "Starting new container..."
-                    docker run -d --name $CONTAINER_NAME -p $PORT:3000 $USERNAME/$DOCKER_IMAGE:latest
+                echo "Starting new containers..."
+                docker-compose up -d
                 '''
             }
             echo 'Pipeline completed successfully!'

@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+RUN apk add --no-cache yarn
+
 WORKDIR /app
 
 COPY package.json yarn.lock ./
@@ -10,6 +12,8 @@ COPY . .
 
 RUN yarn build
 
-EXPOSE 3000
+RUN yarn install --production --ignore-scripts --prefer-offline
 
-CMD ["yarn", "start:prod"]
+EXPOSE 3001
+
+CMD ["node", "dist/main"]
