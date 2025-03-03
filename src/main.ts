@@ -7,15 +7,13 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .setTitle('Scam Bank Core Service')
-    .setDescription('The Scam Bank Core Service API description')
-    .setVersion('1.0')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('docs', app, documentFactory());
 
-  SwaggerModule.setup('api', app, documentFactory());
-
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 1337);
+  console.log(`Server is running on port ${process.env.PORT ?? 1337}`);
 }
 
 bootstrap();

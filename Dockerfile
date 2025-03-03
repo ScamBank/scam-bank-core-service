@@ -1,4 +1,4 @@
-FROM node:20-alpine
+FROM node:22-alpine
 
 RUN apk add --no-cache yarn
 
@@ -14,6 +14,6 @@ RUN yarn build
 
 RUN yarn install --production --ignore-scripts --prefer-offline
 
-EXPOSE 3001
+EXPOSE 3000
 
 CMD ["node", "dist/main"]
