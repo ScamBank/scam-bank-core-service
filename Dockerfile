@@ -1,18 +1,14 @@
 FROM node:22-alpine
 
-RUN apk add --no-cache yarn
+COPY package*.json ./
 
-WORKDIR /app
-
-COPY package.json yarn.lock ./
-
-RUN yarn install --frozen-lockfile
+RUN npm install
 
 COPY . .
 
-RUN yarn build
+RUN npm run build
 
-RUN yarn install --production --ignore-scripts --prefer-offline
+RUN npm prune --production
 
 EXPOSE 3000
 
